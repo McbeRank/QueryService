@@ -396,6 +396,14 @@ function run(){
 
 function start(scheduleRule){
 	console.log("[QueryService] Starting QueryService ...");
+
+	if(!fs.existsSync(McbeRank.files.addresses)){
+		console.log("[QueryService] We can't find /public/data/addresses.json !");
+		console.log("[QueryService] Please create file and put servers and restart app.");
+		console.log("[QueryService] Terminate service.");
+		return;
+	}
+
 	schedule.scheduleJob(scheduleRule || '*/1 * * * *', function(){
 		run();
 	});
