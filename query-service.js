@@ -4,7 +4,7 @@ const dns = require('dns');
 const util = require('util');
 const schedule = require('node-schedule');
 const Gamedig = require('gamedig');
-const McbeRank = require('../public/assets/js/McbeRank.js');
+const McbeRank = require(__basedir + '/public/assets/js/McbeRank.js');
 
 const mkdir = function(dirPath){
 	try{
