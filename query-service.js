@@ -4,7 +4,9 @@ const dns = require('dns');
 const util = require('util');
 const schedule = require('node-schedule');
 const Gamedig = require('gamedig');
+const moment = require('moment');
 const McbeRank = require(__basedir + '/public/assets/js/McbeRank-Utils/McbeRank.js');
+const logger = require(__basedir + 'config/logger.js');
 
 const mkdir = function(dirPath){
 	try{
@@ -86,7 +88,7 @@ const Server = {
  * Called when file error occured
  */
 function handleFileError(error){
-	if(error) console.log(error);
+	if(error) logger.error(error);
 }
 
 /**
@@ -245,7 +247,7 @@ function query(address){
 }
 
 function run(){
-	console.log("[QueryService] Starting query at " + new Date());
+	var startTime = new Date();
 
 	// minute timestamp
 	var time = McbeRank.timestamp();
@@ -390,17 +392,16 @@ function run(){
 		}
 		fs.appendFile(McbeRank.files.statistics.total, "\n" + time + "," + total.numplayers + "," + total.online_servers, handleFileError);
 
-		console.log("[QueryService] Finished query at " + new Date());
+		logger.info("Query successed in " + moment.utc(new Date() - startTime).format('ss.SS') + "s");
 	});
 }
 
 function start(scheduleRule){
-	console.log("[QueryService] Starting QueryService ...");
+	logger.info("Starting QueryService ...");
 
 	if(!fs.existsSync(McbeRank.files.addresses)){
-		console.log("[QueryService] We can't find /public/data/addresses.json !");
-		console.log("[QueryService] Please create file and put servers and restart app.");
-		console.log("[QueryService] Terminate service.");
+		logger.info("We can't find /public/data/addresses.json !");
+		logger.info("Please create file and put servers and restart app.");
 		return;
 	}
 
