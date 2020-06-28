@@ -6,7 +6,7 @@ const schedule = require('node-schedule');
 const Gamedig = require('gamedig');
 const moment = require('moment');
 const McbeRank = require(__basedir + '/public/assets/js/McbeRank-Utils/McbeRank.js');
-const logger = require(__basedir + 'config/logger.js');
+const logger = require(__basedir + '/config/logger.js');
 
 const mkdir = function(dirPath){
 	try{
